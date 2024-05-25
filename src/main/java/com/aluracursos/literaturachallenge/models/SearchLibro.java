@@ -3,10 +3,11 @@ package com.aluracursos.literaturachallenge.models;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record DataAutor(
-        @JsonAlias("name") String nombre,
-        @JsonAlias("birth_year") Integer nacimiento,
-        @JsonAlias("death_year") Integer deceso
+public record SearchLibro(
+        @JsonAlias("count") Integer resultados,
+        @JsonAlias("results") List<DataLibro> libro
 ) {
 }
