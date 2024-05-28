@@ -32,7 +32,6 @@ public class Principal {
         this.repositorioLibro = libroRepository;
         this.repositorioAutor= autorRepository;
     }
-    // private String buscarURL= "search=";
 
     public void iniciarAPP(){
 
@@ -101,48 +100,17 @@ public class Principal {
             }catch (LazyInitializationException e){
                 System.out.println("No se pudo agregar libro por\n "+e);
             }
-
             System.out.println("Terminando de Foreach");
-            //libro.getAutor().add(autor);
         });
         System.out.println("Intentando save(libro)");
         repositorioLibro.save(libro);
-
-//        repositorioAutor.saveAll(datos.libro().get(libroElegido-1).autores().stream().map(a -> new Autor(a)).collect(Collectors.toList()));
-//        libro.getAutor().forEach(a->a.getLibro().add(libro));
-//        libro.getAutor().forEach(System.out::println);
-//        repositorioAutor.saveAll(libro.getAutor());
-//        repositorioLibro.save(libro);
-//
-
-       /* //listaAutores=repositorioAutor.findAll();
-        //IntStream.range(0,libro.getAutor().size()).forEach(i->listaAutores.);
-        if (!listaAutores.stream().anyMatch(l->l.getNombre().equalsIgnoreCase(libro.getAutor().get(0).getNombre()))){
-            System.out.println("No hay autores iguales");
-            repositorioAutor.saveAll(libro.getAutor());
-        }else{
-            System.out.println("mismos Actores");
-            // if(libro.getAutor().equals(listaAutores))
-            //autor= libro.getAutor().stream()
-            //Autor autor = new Autor(libro.getAutor().get(0));
-            //listaAutores= libro.getAutor().stream().map(a->new Autor(a)).collect(Collectors.toList());
-        }
-       // listaLibros=repositorioLibro.findAll();
-        if (!listaLibros.stream().anyMatch(l->l.getTitulo().equalsIgnoreCase(libro.getTitulo()))) {
-            repositorioLibro.save(libro);
-        }else{
-            System.out.println("Ya hay un libro con este nombre\n");
-        }*/
-
 
         return libro;
     }
 
     public void mostrarListaDeLibros(){
-       // listaLibros=repositorioLibro.findAll();
         if (listaLibros.size()!=0) {
            listaLibros.forEach(System.out::println);
-           // listaLibros.forEach(l->l.getAutor().forEach(System.out::println));
         }else{
             System.out.println("No hay libros Registrados");
         }
@@ -187,25 +155,10 @@ public class Principal {
         {
             idiomaElegido= teclado.nextLine();
             idiomaElegido=cambiarAIdioma(idiomaElegido);
-            System.out.println(idiomaElegido);
         }
-        System.out.println("fuera del while: "+idiomaElegido);
         String idiomaValido=idiomaElegido;
 
         listaLibros.stream().filter(l->l.getLenguaje().equals(Lenguaje.fromString(idiomaValido))).forEach(System.out::println);
-
-//        if (listaAutores.size()!=0){
-//            listaAutores.forEach(a->{
-//                System.out.printf("Nombre: %s\nNacimiendo: %d\nDeceso: %d\nlibros:",a.getNombre(),a.getNacimiento(),a.getDeceso());
-//                //listaLibros.stream().map(l->l.getAutorNombre().stream().filter(nombre->nombre.equalsIgnoreCase(a.getNombre()))).toList().forEach(ln->ln.forEach(System.out::println));
-//                listaLibros.stream().filter(l->l.getAutorNombre().contains(a.getNombre())).forEach(l-> System.out.printf("-[%s]",l.getTitulo()));
-//                System.out.println("\n");
-//            });
-//        }else{
-//            System.out.println("No hay autores registrados hasta ese fecha\n");
-//        }
-
-
     }
 
     public String cambiarAIdioma(String idiomaIngresado){
@@ -215,8 +168,10 @@ public class Principal {
             idiomaValido="";
         }
         if (idiomaIngresado.toLowerCase().equalsIgnoreCase("help")){
-            idiomaValido=idiomaIngresado;
             menu.mostrarMenus("lenguajes");
+            System.out.println("Escriba el codigo de un idioma que quiera elegir");
+            var nuevoIdioma= teclado.nextLine();
+            idiomaValido=nuevoIdioma;
         }
             if (idiomaIngresado.toLowerCase().contains("esp")){
                 idiomaValido="es";

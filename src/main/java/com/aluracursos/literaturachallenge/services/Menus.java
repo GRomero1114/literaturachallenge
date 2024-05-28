@@ -24,11 +24,11 @@ public class Menus {
                     Frances
                     Ingles
                     Portugues
-                    help>Mostrar Todos los idiomas
+                    help>Mostrar Todos los idiomas disponibles
                     """);
         }
         if (tipo.equalsIgnoreCase("lenguajes")) {
-            File lenguajes = new File("lenguajes.txt");
+            File lenguajes = new File("src/main/java/com/aluracursos/literaturachallenge/services/lenguajes.txt");
             String contenido;
             FileReader lector = null;
             try {
