@@ -143,7 +143,7 @@ public class Principal {
         System.out.println("Ingrese una año en el que se encontraba vivo el autor :");
         var anio = teclado.nextInt();
         teclado.nextLine();
-        listaAutores=listaAutores.stream().filter(a->a.getDeceso()>anio ).toList();
+        listaAutores=listaAutores.stream().filter(a->a.getDeceso()>anio && a.getNacimiento()<anio ).toList();
         if (listaAutores.size()!=0){
             listaAutores.forEach(a->{
                 System.out.printf("Nombre: %s\nNacimiendo: %d\nDeceso: %d\nlibros:",a.getNombre(),a.getNacimiento(),a.getDeceso());
