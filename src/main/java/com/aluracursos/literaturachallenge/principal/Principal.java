@@ -1,6 +1,7 @@
 package com.aluracursos.literaturachallenge.principal;
 
 import com.aluracursos.literaturachallenge.models.Autor;
+import com.aluracursos.literaturachallenge.models.Lenguaje;
 import com.aluracursos.literaturachallenge.models.Libro;
 import com.aluracursos.literaturachallenge.models.SearchLibro;
 import com.aluracursos.literaturachallenge.repository.AutorRepository;
@@ -41,14 +42,16 @@ public class Principal {
                 {1} Buscar libro por titulo
                 {2} Mostrar lista de libros
                 {3} Mostrar lista de Autores
-                {4} Buscar autores vivos en un determinado año
-                {5} 
+                {4} Mostrar autores registrados vivos hasta un determinado año
+                {5} Mostrar libros por idioma
                 Elige una opcion...
                 """);
 
         Integer opcion=-1;
 
         while (opcion!=0){
+            listaAutores=repositorioAutor.findAll();
+            listaLibros= repositorioLibro.findAll();
             System.out.println(menu);
             opcion=teclado.nextInt();
             teclado.nextLine();
@@ -61,6 +64,12 @@ public class Principal {
                     break;
                 case 3:
                     mostrarListaDeAutores();
+                    break;
+                case 4:
+                    buscarAutorPorAnio();
+                    break;
+                case 5:
+                    buscarLibroPorIdioma();
                     break;
                 case 0:
                     break;
@@ -85,7 +94,7 @@ public class Principal {
         Integer libroElegido = teclado.nextInt();
         teclado.nextLine();
         Libro libro = new Libro(datos.libro().get(libroElegido-1));
-        listaAutores=repositorioAutor.findAll();
+        //listaAutores=repositorioAutor.findAll();
         //IntStream.range(0,libro.getAutor().size()).forEach(i->listaAutores.);
         if (!listaAutores.stream().anyMatch(l->l.getNombre().equalsIgnoreCase(libro.getAutor().get(0).getNombre()))){
             System.out.println("No hay autores iguales");
@@ -97,17 +106,17 @@ public class Principal {
             //Autor autor = new Autor(libro.getAutor().get(0));
             //listaAutores= libro.getAutor().stream().map(a->new Autor(a)).collect(Collectors.toList());
         }
-        listaLibros=repositorioLibro.findAll();
+       // listaLibros=repositorioLibro.findAll();
         if (!listaLibros.stream().anyMatch(l->l.getTitulo().equalsIgnoreCase(libro.getTitulo()))) {
             repositorioLibro.save(libro);
         }else{
-            System.out.println("Ya hay un libro con este nombre");
+            System.out.println("Ya hay un libro con este nombre\n");
         }
         return libro;
     }
 
     public void mostrarListaDeLibros(){
-        listaLibros=repositorioLibro.findAll();
+       // listaLibros=repositorioLibro.findAll();
         if (listaLibros.size()!=0) {
            listaLibros.forEach(System.out::println);
            // listaLibros.forEach(l->l.getAutor().forEach(System.out::println));
@@ -117,8 +126,7 @@ public class Principal {
     }
 
     public void mostrarListaDeAutores(){
-        listaAutores=repositorioAutor.findAll();
-        listaLibros= repositorioLibro.findAll();
+
         if (listaAutores.size()!=0){
             listaAutores.forEach(a->{
                 System.out.printf("Nombre: %s\nNacimiendo: %d\nDeceso: %d\nlibros:",a.getNombre(),a.getNacimiento(),a.getDeceso());
@@ -127,8 +135,90 @@ public class Principal {
                 System.out.println("\n");
             });
         }else{
-            System.out.println("No hay autores registrados");
+            System.out.println("No hay autores registrados\n");
         }
+    }
+
+    public void buscarAutorPorAnio(){
+        System.out.println("Ingrese una año en el que se encontraba vivo el autor :");
+        var anio = teclado.nextInt();
+        teclado.nextLine();
+        listaAutores=listaAutores.stream().filter(a->a.getDeceso()>anio ).toList();
+        if (listaAutores.size()!=0){
+            listaAutores.forEach(a->{
+                System.out.printf("Nombre: %s\nNacimiendo: %d\nDeceso: %d\nlibros:",a.getNombre(),a.getNacimiento(),a.getDeceso());
+                //listaLibros.stream().map(l->l.getAutorNombre().stream().filter(nombre->nombre.equalsIgnoreCase(a.getNombre()))).toList().forEach(ln->ln.forEach(System.out::println));
+                listaLibros.stream().filter(l->l.getAutorNombre().contains(a.getNombre())).forEach(l-> System.out.printf("-[%s]",l.getTitulo()));
+                System.out.println("\n");
+            });
+        }else{
+            System.out.println("No hay autores registrados\n");
+        }
+
+
+
+    }
+
+    public void buscarLibroPorIdioma(){
+        String idiomaElegido="";
+        System.out.println("""
+                Ingrese el idioma de los libros que desea buscar:
+                Español
+                Frances
+                Ingles
+                Portugues
+                help>Mostrar Todos los idiomas
+                """);
+        while (idiomaElegido.equalsIgnoreCase(""))
+        {
+            idiomaElegido= teclado.nextLine();
+            idiomaElegido=cambiarAIdioma(idiomaElegido);
+            System.out.println(idiomaElegido);
+        }
+        System.out.println("fuera del while: "+idiomaElegido);
+        String idiomaValido=idiomaElegido;
+
+        listaLibros.stream().filter(l->l.getLenguaje().equals(Lenguaje.fromString(idiomaValido))).forEach(System.out::println);
+
+//        if (listaAutores.size()!=0){
+//            listaAutores.forEach(a->{
+//                System.out.printf("Nombre: %s\nNacimiendo: %d\nDeceso: %d\nlibros:",a.getNombre(),a.getNacimiento(),a.getDeceso());
+//                //listaLibros.stream().map(l->l.getAutorNombre().stream().filter(nombre->nombre.equalsIgnoreCase(a.getNombre()))).toList().forEach(ln->ln.forEach(System.out::println));
+//                listaLibros.stream().filter(l->l.getAutorNombre().contains(a.getNombre())).forEach(l-> System.out.printf("-[%s]",l.getTitulo()));
+//                System.out.println("\n");
+//            });
+//        }else{
+//            System.out.println("No hay autores registrados hasta ese fecha\n");
+//        }
+
+
+    }
+
+    public String cambiarAIdioma(String idiomaIngresado){
+
+        String idiomaValido = "";
+        if (!idiomaIngresado.toLowerCase().contains("exit")){
+            idiomaValido="";
+        }
+        if (idiomaIngresado.toLowerCase().equalsIgnoreCase("help")){
+            idiomaValido=idiomaIngresado;
+        }
+            if (idiomaIngresado.toLowerCase().contains("esp")){
+                idiomaValido="es";
+            }
+            if (idiomaIngresado.toLowerCase().contains("fra")){
+                idiomaValido="fr";
+            }
+            if (idiomaIngresado.toLowerCase().contains("por")){
+                idiomaValido="pr";
+            }
+            if (idiomaIngresado.toLowerCase().contains("ing")){
+                idiomaValido="en";
+            }
+
+
+        return idiomaValido;
+
     }
 
 
