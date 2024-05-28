@@ -3,6 +3,7 @@ package com.aluracursos.literaturachallenge.models;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,9 +15,8 @@ public class Autor {
     private String nombre;
     private Integer nacimiento;
     private Integer deceso;
-    //@ManyToMany(mappedBy =
-    @Transient
-    private List<Libro> libro;
+    @ManyToMany(mappedBy = "autor")
+    private List<Libro> libro= new ArrayList<>();
 
     //Getter
     public String getNombre() {

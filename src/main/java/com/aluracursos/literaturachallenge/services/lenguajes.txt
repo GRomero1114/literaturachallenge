@@ -181,4 +181,4 @@ YÍDISH (O YIDIS, O YIDDISH) ("yi"),
 YORUBA ("yo"),
 CHUAN (O CHUANG, O ZHUANG) ("za"),
 CHINO ("zh"),
-ZULÚ ("zu"),
+ZULÚ ("zu")

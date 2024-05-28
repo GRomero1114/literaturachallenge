@@ -3,6 +3,7 @@ package com.aluracursos.literaturachallenge.models;
 import jakarta.persistence.*;
 import jdk.jfr.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,19 +16,18 @@ public class Libro {
     private Long id;
     @Column(unique = true)
     private String titulo;
-   /*@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+   @ManyToMany(fetch = FetchType.LAZY)//cascade = CascadeType.MERGE,
     @JoinTable(
             name = "libros_autores",
             joinColumns = @JoinColumn(name = "libro_id",referencedColumnName = "titulo"),
             inverseJoinColumns = @JoinColumn(name = "autores_id",referencedColumnName = "nombre")
-    )*/
-    @Transient
-    private List<Autor> autor;
+    )
+    private List<Autor> autor = new ArrayList<>();
     private Integer descargas;
     @Enumerated(EnumType.STRING)
     private Lenguaje lenguaje;
-    @Transient
-    Optional<String> lenguajesO;
+//    @Transient
+//    Optional<String> lenguajesO;
     private List<String> autorNombre;
 
     //Setter
@@ -88,9 +88,11 @@ public class Libro {
     }
 
     public Libro(DataLibro dataLibro) {
-        this.id = dataLibro.id().longValue();
+       // this.id = dataLibro.id().longValue();
         this.titulo = dataLibro.titulo();
         this.autor = dataLibro.autores().stream().map(a -> new Autor(a)).toList();
+        System.out.println("Agregando autores");
+        autor.forEach(a-> System.out.println(a.getNombre()));
         this.autorNombre = autor.stream().map(a -> a.getNombre()).toList();
         this.descargas = dataLibro.descargas();
         this.lenguaje = Lenguaje.fromString( dataLibro.lenguajes().stream().findFirst().get());
