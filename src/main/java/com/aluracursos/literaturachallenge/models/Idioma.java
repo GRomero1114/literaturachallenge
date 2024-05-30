@@ -1,6 +1,6 @@
 package com.aluracursos.literaturachallenge.models;
 
-public enum Lenguaje {
+public enum Idioma {
     AFAR ("aa"),
     ABJASIO ("ab"),
     AVESTICO ("ae"),
@@ -189,21 +189,23 @@ public enum Lenguaje {
 
 
 
-    private String lenguajesBase;
+    private String idiomasBase;
 
-    Lenguaje (String lenguajesBase){
-        this.lenguajesBase=lenguajesBase;
+    Idioma(String idiomasBase){
+        this.idiomasBase=idiomasBase;
     }
 
-    public static Lenguaje fromString(String text) {
-        for (Lenguaje lenguaje : Lenguaje.values()) {
-            if (lenguaje.lenguajesBase.equalsIgnoreCase(text)) {
-                return lenguaje;
+    public static Idioma fromString(String text) {
+        for (Idioma idioma : Idioma.values()) {
+            if (idioma.idiomasBase.equalsIgnoreCase(text)) {
+                return idioma;
             }
         }
         return NO_INFORMATION;
-        //throw new IllegalArgumentException("Ningun lenguaje encontrado: " + text);
+        //throw new IllegalArgumentException("Ningun idioma encontrado: " + text);
     }
+
+
 
 /*
 public enum Lenguaje {
@@ -213,19 +215,19 @@ public enum Lenguaje {
     PORTUGES("pt"),
     DESCONOCIDA(Desco)
 
-    private String lenguajesBase;
+    private String idiomasBase;
 
-    Lenguaje (String lenguajesBase){
-        this.lenguajesBase=lenguajesBase;
+    Lenguaje (String idiomasBase){
+        this.idiomasBase=idiomasBase;
     }
 
     public static Lenguaje fromString(String text) {
         for (Lenguaje categoria : Lenguaje.values()) {
-            if (categoria.lenguajesBase.equalsIgnoreCase(text)) {
+            if (categoria.idiomasBase.equalsIgnoreCase(text)) {
                 return categoria;
             }
         }
-        throw new IllegalArgumentException("Ningun lenguaje encontrado: " + text);
+        throw new IllegalArgumentException("Ningun idioma encontrado: " + text);
     }
 
 

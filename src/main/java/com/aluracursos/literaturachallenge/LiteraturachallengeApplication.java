@@ -22,7 +22,7 @@ public class LiteraturachallengeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Principal principal = new Principal(librosRepository,autoresRepository);
-		principal.iniciarAPP();
+		principal.principal();
 
 	}
 }

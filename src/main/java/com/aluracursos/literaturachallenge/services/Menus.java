@@ -2,32 +2,56 @@ package com.aluracursos.literaturachallenge.services;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.util.Scanner;
 
 public class Menus {
-
+    Scanner teclado = new Scanner(System.in);
     public void mostrarMenus(String tipo) {
-        if (tipo.equalsIgnoreCase("principal")) {
+        if (tipo.equalsIgnoreCase("Inicio")) {
+            System.out.println("""
+                    *****MENU*****
+                    {1} Buscar libros
+                    {2} Mostrar libros registrados
+                    
+                    {0} Salir
+                    Por favor elija una opción
+                    """);
+        }
+
+        if (tipo.equalsIgnoreCase("agregar")) {
             System.out.println("""
                     *****MENU*****
                     {1} Buscar libro por titulo
-                    {2} Mostrar lista de libros
-                    {3} Mostrar lista de Autores
-                    {4} Mostrar autores registrados vivos hasta un determinado año
-                    {5} Mostrar libros por idioma
-                    Elige una opcion...
+                    {2} Buscar libros por Idioma
+                    {3} Buscar libros por Fecha
+                    
+                    {0} Volver al menú anterior
+                    Elige una opción...
                     """);
         }
+
+        if (tipo.equalsIgnoreCase("enlistar")) {
+            System.out.println("""
+                    \n *****MENU*****
+                    {1} Mostrar lista de libros
+                    {2} Mostrar lista de Autores
+                    {3} Mostrar autores registrados vivos en un determinado año
+                    {4} Mostrar libros por idioma
+                    {5} Mostrar Top 10 libros
+                    {6} Buscar algun autor registrado por Nombre
+                    
+                    {0} Volver al menú anterior""");
+        }
+
         if (tipo.equalsIgnoreCase("idiomas")) {
             System.out.println("""
                     Ingrese el idioma de los libros que desea buscar:
                     Español
                     Frances
                     Ingles
-                    Portugues
-                    help>Mostrar Todos los idiomas disponibles
-                    """);
+                    Portugues""");
         }
-        if (tipo.equalsIgnoreCase("lenguajes")) {
+            if (tipo.equalsIgnoreCase("lenguajes")) {
             File lenguajes = new File("src/main/java/com/aluracursos/literaturachallenge/services/lenguajes.txt");
             String contenido;
             FileReader lector = null;
@@ -51,4 +75,30 @@ public class Menus {
             }
         }
     }
+
+    public Integer validarOpcionCorrecta(String menu,Integer opcionesDelMenu){
+        boolean entradaValida = false;
+        Integer opcion=-1;
+        while (!entradaValida) {
+            mostrarMenus(menu);
+            System.out.print("Ingrese su opción: ");
+            if (teclado.hasNextInt()) {
+                opcion = teclado.nextInt();
+                teclado.nextLine();
+                if (opcion >= 0 && opcion <= opcionesDelMenu) {
+                    entradaValida = true;
+                    break;
+                }
+                if (!entradaValida) {
+                    System.out.println("\nOpción no válida. Por favor, ingrese una de las opciones en pantalla");
+                }
+            } else {
+                System.out.println("\nOpción no válida. Por favor, ingrese el numero de una de las opciones en pantalla");
+                teclado.next(); // Consumir la entrada no válida
+            }
+        }
+        return opcion;
+    }
+
+
 }

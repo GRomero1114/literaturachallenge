@@ -11,6 +11,6 @@ public record DataLibro(
         @JsonAlias("title") String titulo ,
         @JsonAlias("authors")List <DataAutor> autores,
         @JsonAlias("download_count") Integer descargas,
-        @JsonAlias("languages") List <String> lenguajes
+        @JsonAlias("languages") List <String> idioma
         ) {
 }

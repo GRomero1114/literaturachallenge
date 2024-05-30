@@ -72,9 +72,10 @@ public class Autor {
     //toString
     @Override
     public String toString() {
-        return "******************************\nNombre='" + nombre + '\'' +
+        return "***********AUTOR***************\nNombre='" + nombre + '\'' +
                 ", Nacimiento=" + nacimiento +
                 ", Deceso=" + deceso +
-                "\n******************************\n";
+                "\n";
+                //"\n******************************\n";
     }
 }
