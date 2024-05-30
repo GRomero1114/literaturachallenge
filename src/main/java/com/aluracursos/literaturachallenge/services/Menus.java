@@ -10,11 +10,10 @@ public class Menus {
         if (tipo.equalsIgnoreCase("Inicio")) {
             System.out.println("""
                     *****MENU*****
-                    {1} Buscar libros
+                    {1} Buscar libros para agregar
                     {2} Mostrar libros registrados
                     
                     {0} Salir
-                    Por favor elija una opción
                     """);
         }
 
@@ -26,7 +25,6 @@ public class Menus {
                     {3} Buscar libros por Fecha
                     
                     {0} Volver al menú anterior
-                    Elige una opción...
                     """);
         }
 
@@ -84,7 +82,6 @@ public class Menus {
             System.out.print("Ingrese su opción: ");
             if (teclado.hasNextInt()) {
                 opcion = teclado.nextInt();
-                teclado.nextLine();
                 if (opcion >= 0 && opcion <= opcionesDelMenu) {
                     entradaValida = true;
                     break;

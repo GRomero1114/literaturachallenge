@@ -205,34 +205,6 @@ public enum Idioma {
         //throw new IllegalArgumentException("Ningun idioma encontrado: " + text);
     }
 
-
-
-/*
-public enum Lenguaje {
-    ESPANOL("es"),
-    FRANCES("fr"),
-    INGLES("en"),
-    PORTUGES("pt"),
-    DESCONOCIDA(Desco)
-
-    private String idiomasBase;
-
-    Lenguaje (String idiomasBase){
-        this.idiomasBase=idiomasBase;
-    }
-
-    public static Lenguaje fromString(String text) {
-        for (Lenguaje categoria : Lenguaje.values()) {
-            if (categoria.idiomasBase.equalsIgnoreCase(text)) {
-                return categoria;
-            }
-        }
-        throw new IllegalArgumentException("Ningun idioma encontrado: " + text);
-    }
-
-
-    }
-*/
 }
 
 
